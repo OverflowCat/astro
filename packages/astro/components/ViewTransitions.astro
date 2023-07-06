@@ -82,7 +82,7 @@
 
 	['mouseenter', 'touchstart', 'focus'].forEach(evName => {
 		document.addEventListener(evName, ev => {
-			if((ev.target instanceof HTMLAnchorElement) {
+			if(ev.target instanceof HTMLAnchorElement) {
 				let el = ev.target;
 				if(el.origin === location.origin && el.pathname !== location.pathname) {
 					maybePrefetch(el.pathname);
