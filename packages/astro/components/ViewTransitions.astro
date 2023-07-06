@@ -16,7 +16,7 @@
     const html = await htmlPromise;
     const doc = parser.parseFromString(html, 'text/html');
 		if(isBackNav) {
-			doc.documentElement.classList.add('astro-back-transition');
+			doc.documentElement.dataset.astroBackTransition = '';
 		}
     document.documentElement.replaceWith(doc.documentElement);
   }
@@ -24,8 +24,10 @@
 	async function navigate(isBackNav: boolean, href: string) {
 		let htmlPromise = getHTML(href);
 		let finished: Promise<void>;
+		// TODO do we want this feature?
+		document.documentElement.dataset.astroTransition = '';
 		if(isBackNav) {
-			document.documentElement.classList.add('astro-back-transition');
+			document.documentElement.dataset.astroBackTransition = '';
 		}
 		if(document.startViewTransition) {
 			finished = document.startViewTransition(() => updateDOM(isBackNav, htmlPromise)).finished;
