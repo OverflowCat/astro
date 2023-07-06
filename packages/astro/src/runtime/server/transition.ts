@@ -66,7 +66,7 @@ export function renderTransition(result: SSRResult, hash: string, animationName:
 	`.trim()}
 	</style>`)
 
-	result.extraHead.push(styles);
+	result._metadata.extraHead.push(styles);
 
 	return scope;
 }

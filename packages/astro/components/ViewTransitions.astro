@@ -1,11 +1,4 @@
 <script>
-  declare global {
-    interface Window { MyNamespace: any; }
-    interface Document {
-      startViewTransition?: (cb: () => Promise<void>) => { finished: Promise<void>; };
-    }
-  }
-
 	let currentIndex = history.state?.index || 0;
 	if(!history.state) {
 		history.replaceState({index: currentIndex}, document.title);
@@ -49,7 +42,7 @@
 	}
 
   document.addEventListener('click', (ev) => {
-		let link = ev.target as HTMLAnchorElement;
+		let link = ev.target;
 		if (link instanceof HTMLAnchorElement &&
 			link.href &&
 			(!link.target || link.target === '_self') &&
@@ -72,5 +65,29 @@
 		const direction = index > currentIndex ? 'forward' : 'back';
 		navigate(direction === 'back', location.href);
 		currentIndex = index;
+	});
+
+	// Prefetching
+	function maybePrefetch(pathname: string) {
+		if(document.querySelector(`link[rel=prefetch][href="${pathname}"]`)) return;
+		if(navigator.connection){
+			let conn = navigator.connection;
+			if(conn.saveData || /(2|3)g/.test(conn.effectiveType || '')) return;
+		}
+		let link = document.createElement('link');
+		link.setAttribute('rel', 'prefetch');
+		link.setAttribute('href', pathname);
+		document.head.append(link);
+	}
+
+	['mouseenter', 'touchstart', 'focus'].forEach(evName => {
+		document.addEventListener(evName, ev => {
+			if((ev.target instanceof HTMLAnchorElement) {
+				let el = ev.target;
+				if(el.origin === location.origin && el.pathname !== location.pathname) {
+					maybePrefetch(el.pathname);
+				}
+			}
+		}, { passive: true, capture: true });
 	});
 </script>
