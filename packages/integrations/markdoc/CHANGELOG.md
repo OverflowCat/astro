@@ -1,5 +1,13 @@
 # @astrojs/markdoc
 
+## 0.4.2
+
+### Patch Changes
+
+- [#7593](https://github.com/withastro/astro/pull/7593) [`c135633bf`](https://github.com/withastro/astro/commit/c135633bf6a84e751249920cba9009f0e394e29a) Thanks [@bholmesdev](https://github.com/bholmesdev)! - Add a documentation link to the configuration error hint for those migration pre-v0.4.0 config to the latest version.
+
+- [#7599](https://github.com/withastro/astro/pull/7599) [`8df6a423c`](https://github.com/withastro/astro/commit/8df6a423c5088a68cc409b5415b09aff0c10a0f1) Thanks [@bholmesdev](https://github.com/bholmesdev)! - Fix hyphens in Markdoc tag names causing build failures
+
 ## 0.4.1
 
 ### Patch Changes
